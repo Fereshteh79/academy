@@ -1,8 +1,8 @@
 from django.urls import path, re_path, register_converter
-from academy.blog.utils import FourDigityear
-from academy.blog.views import categories_list, post_list, post_detail, costom_post_detail
+from blog.utils import FourDigitYear
+from blog.views import categories_list, post_list, post_detail, costom_post_detail
 
-register_converter(FourDigityear, 'four digit')
+register_converter(FourDigitYear, 'fourdigit')
 
 urlpatterns = [
     path('list/', post_list),
