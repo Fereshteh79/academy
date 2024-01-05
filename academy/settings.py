@@ -22,6 +22,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
+SECRET_KEY = 'django-insecure-o26mclkncq671un&#o6*v+r3dh+-z0h_=$&$^z%#u-_r3q^mo6'
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
@@ -41,6 +43,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blog.apps.BlogConfig',
     'catalogue.apps.CatalogueConfig',
+    'transaction.apps.TransactionConfig',
+    'partner.apps.PartnerConfig',
+
 ]
 
 MIDDLEWARE = [
@@ -132,3 +137,5 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_URL = "/admin/login/"
