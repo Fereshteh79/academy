@@ -33,18 +33,18 @@ def user_profile(request):
     return HttpResponse(f"Hello {request.user.username}")
 
 
-@login_required()
-@require_http_methods(request_method_list=["GET"])
-@user_passes_test(check_is_active)
-@user_passes_test(lambda u: u.is_staff)
-@permission_required('transaction.has_score_permission')
+# @login_required()
+# @require_http_methods(request_method_list=["GET"])
+# @user_passes_test(check_is_active)
+# @user_passes_test(lambda u: u.is_staff)
+# @permission_required('transaction.has_score_permission')
 def user_profile(request):
     return HttpResponse(f"Hello{request.user.username}")
 
 
-@login_required()
-@require_POST
-@user_passes_test(lambda u: u.score > 20)
-@user_passes_test(lambda u: u.age > 14)
+# @login_required()
+# @require_POST
+# @user_passes_test(lambda u: u.score > 20)
+# @user_passes_test(lambda u: u.age > 14)
 def campaign(request):
     return HttpResponse(f"Hello {request.user.username}")
