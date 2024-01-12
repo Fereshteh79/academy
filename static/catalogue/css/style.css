@@ -1,0 +1,10 @@
+.nav_bar_items{
+    color: white;
+    background_color: #797979;
+    display: inline-block;
+    padding: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    text-decoration: none;
+
+}

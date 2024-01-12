@@ -54,6 +54,10 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        from django.urls import reverse
+        return reverse('category_detail', args=[self.pk])
+
 
 class Brand(models.Model):
     name = models.CharField(max_length=32)
@@ -68,6 +72,7 @@ class Product(models.Model):
     upc = models.BigIntegerField(unique=True)
     title = models.CharField(max_length=32)
     description = models.TextField(blank=True)
+    image = models.ImageField(null=True, blank=True, upload_to='products')
     is_active = models.BooleanField(default=True)
     category = models.ForeignKey(Category, on_delete=models.PROTECT, related_name='products')
     brand = models.ForeignKey(Brand, on_delete=models.PROTECT, related_name='products')
@@ -81,8 +86,19 @@ class Product(models.Model):
 
     @property
     def stock(self):
-        return self.partnerstock_set.all().order_by('price').first()
+        return self.partners.all().order_by('price').first()
 
 
-class ProductAttributes(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+class ProductImage(models.Model):
+    image = models.ImageField(null=True, blank=True, upload_to='products/')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images')
+
+
+class ProductAttributesValue(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='attribute_values')
+    value = models.CharField(max_length=48)
+    attribute = models.ForeignKey(ProductAttribute, on_delete=models.PROTECT, related_name='values')
+
+    def __str__(self):
+        return str(self.product)
+

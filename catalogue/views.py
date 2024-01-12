@@ -1,18 +1,28 @@
-from django.shortcuts import get_object_or_404
-from django.http import HttpResponse
+from django.shortcuts import get_object_or_404, render
+from django.http import HttpResponse, Http404
 from django.db.models import Q
 from .models import Product, Category
+from .utils import check_is_active, check_is_staff
+from  django.views.decorators.http import require_GET, require_http_methods, require_POST
+from  .models import Product, Category, ProductType, Brand
+from .utils import check_is_active, check_is_staff
 
 
 def products_list(request):
     products = Product.objects.prefetch_related('category').all()
-    context = "\n".join([f"{product.title}, {product.upc}" for product in products])
-    return HttpResponse(context)
+    context = dict()
+    context['products'] = Product.objects.select_related('category').all()
+    context['categories'] = Category.objects.all()
+    return render(request, 'catalogue/product_list.html', context=context)
 
 
 def product_detail(request, pk):
-    product = get_object_or_404(Product, Q(pk=pk) | Q(upc=pk), is_active=True)
-    return HttpResponse(f"title: {product.title}")
+    queryset = Product.objects.filter(is_active=True).filter(Q(pk=pk) | Q(upc=pk))
+    if queryset.exists():
+        product = queryset.first()
+        form = AddToBasketForm({"product": product.id, 'quantity': 1})
+        return render(request, 'catalogue/product_detail.html', {"product": product, "form": form})
+    raise Http404
 
 
 def category_products(request, pk):
