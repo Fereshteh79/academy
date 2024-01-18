@@ -1,9 +1,8 @@
-from django.shortcuts import render
+import django.http
 from django.views.decorators.http import require_POST
-from django.http import HttpResponse, Http404
+
 from .forms import AddToBasketForm
 from .models import Basket
-from .models import Product
 
 
 @require_POST
@@ -18,11 +17,11 @@ def add_to_basket(request):
 
     basket = Basket.get_basket(request.COOKIES.get('basket_id', None))
     if basket is None:
-        raise Http404
+        raise django.http.Http404
 
     response.set_cookie('basket_id', basket.id)
     if not basket.validate_user(request.user):
-        raise Http404
+        raise django.http.Http404
 
     form = AddToBasketForm(request.POST)
     if form.is_valid():
