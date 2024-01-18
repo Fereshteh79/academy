@@ -14,7 +14,6 @@ def add_to_basket(request):
     # todo_3: get product from submitted from
     # todo_4: add product to the user basket lines
     # todo_5: return to the 'next' url
-    # if request.cookies.get('basket_id', None):
     response = HttpResponseRedirect(request.POST.get('next', '/'))
 
     basket = Basket.get_basket(request.COOKIES.get('basket_id', None))

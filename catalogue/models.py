@@ -100,5 +100,5 @@ class ProductAttributesValue(models.Model):
     attribute = models.ForeignKey(ProductAttribute, on_delete=models.PROTECT, related_name='values')
 
     def __str__(self):
-        return str(self.product)
+        return f"{self.product}({self.attribute}): {self.value}"
 

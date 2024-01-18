@@ -1,9 +1,9 @@
 from django.contrib import admin
 from django.contrib.admin import register
-from .models import Category, Brand, Product, ProductType, ProductAttribute
+from .models import Category, Brand, Product, ProductType, ProductAttribute, ProductImage
 
 
-class ProductAttributeValueInline(admin.TabularInline):
+class ProductAttributeValue(admin.TabularInline):
     model = ProductAttributeValue
     extra = 1
 
